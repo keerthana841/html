@@ -1,0 +1,94 @@
+package ATM_interface;
+
+import java.util.Scanner;
+
+class bankaccount{
+	private double balance;
+	
+	public bankaccount(double ID) {
+		balance = ID;
+	}
+	public double getbalance() {
+		return balance;
+	}
+	
+	public void deposit(double amount) {
+		if(amount>0) {
+			balance+=amount;
+			System.out.println("deposit of $" +amount+"successful.current balance: $"+ balance);
+		}else {
+			System.out.println("invalid deposit amount:");
+		}
+		
+	}
+	public void withdraw(double amount) {
+		if(amount>0 && amount<=balance) {
+			balance+=amount;
+			System.out.println("withdraw of $" + amount + "succesful.current balance:$"+balance);
+		}else {
+			System.out.println("invalid withdraw amount");
+		}
+	}
+}
+	class ATM{
+		private bankaccount bankaccount;
+		
+		public ATM(bankaccount bankaccount) {
+			this.bankaccount = bankaccount;
+	}
+	public void display() {
+		System.out.println("welcome to ATM");
+		System.out.println("1.check balance");
+		System.out.println("2.deposit");
+		System.out.println("3.withdraw");
+		System.out.println("4.Exit");
+		
+	}
+	public void PT(int choice,Scanner scanner) {
+			
+			switch(choice) {
+			case 1:
+				System.out.println("get the balance is: $" + bankaccount.getbalance());
+				break;
+			case 2:
+				System.out.print("enter the deposit amount:");
+			    double depositamount = scanner.nextDouble();
+			    bankaccount.deposit(depositamount);
+			    break;
+			case 3:
+				System.out.println("enter the withdraw amount");
+				double withdrawamount = scanner.nextDouble();
+				bankaccount.withdraw(withdrawamount);
+				break;
+			case 4:
+				System.out.println("exit !thank you");
+				scanner.close();
+				System.exit(0);
+				default:
+					System.out.println("invalid choice. please select a valid option:");
+		}
+	}
+}
+public class ATM_interface {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner (System.in);
+		
+		System.out.println("enter initial account balamce: $");
+		double initialbalance = sc.nextDouble();
+		bankaccount bankaccount = new bankaccount(initialbalance);
+		
+		ATM atm = new ATM(bankaccount);
+		
+		
+		while(true) {
+			atm.display();
+			System.out.println("select an option:");
+			int choice = sc.nextInt();
+			
+			atm.PT(choice, sc);
+		}
+
+	}
+
+}
